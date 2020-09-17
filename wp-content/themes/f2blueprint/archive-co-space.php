@@ -26,11 +26,11 @@
     <h1 class="text-center mt-5 pt-5">Co-Space for lease</h1>
     <h1 class="lead text-center pb-5">Amazing working spaces • Great Location in Chaweng Beach main road.
     </h1>
-    <div class="row">
+    <div class="row mt-5 mb-5">
 
     <?php 
         showPostListByTypeQuery(array('posttype'=>'co-space', 'perpage'=>4));
     ?>
-       
+</div>   
 </div>
 <?php get_footer(); ?>
