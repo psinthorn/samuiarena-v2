@@ -20,22 +20,44 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'local' );
 
-/** MySQL database username */
-define( 'DB_USER', 'root' );
+if(strstr($_SERVER['SERVER_NAME'], 'samuiarena.local')){
+	define( 'DB_NAME', 'local' );
 
-/** MySQL database password */
-define( 'DB_PASSWORD', 'root' );
+	/** MySQL database username */
+	define( 'DB_USER', 'root' );
 
-/** MySQL hostname */
-define( 'DB_HOST', 'localhost' );
+	/** MySQL database password */
+	define( 'DB_PASSWORD', 'root' );
 
-/** Database Charset to use in creating database tables. */
-define( 'DB_CHARSET', 'utf8' );
+	/** MySQL hostname */
+	define( 'DB_HOST', 'localhost' );
 
-/** The Database Collate type. Don't change this if in doubt. */
-define( 'DB_COLLATE', '' );
+	/** Database Charset to use in creating database tables. */
+	define( 'DB_CHARSET', 'utf8' );
+
+	/** The Database Collate type. Don't change this if in doubt. */
+	define( 'DB_COLLATE', '' );
+
+} else {
+	define( 'DB_NAME', 'samuiare_wp225' );
+
+	/** MySQL database username */
+	define( 'DB_USER', 'samuiare_mysql' );
+
+	/** MySQL database password */
+	define( 'DB_PASSWORD', 'oDRh5eAVS^~S' );
+
+	/** MySQL hostname */
+	define( 'DB_HOST', 'localhost' );
+
+	/** Database Charset to use in creating database tables. */
+	define( 'DB_CHARSET', 'utf8' );
+
+	/** The Database Collate type. Don't change this if in doubt. */
+	define( 'DB_COLLATE', '' );
+}
+
 
 /**
  * Authentication Unique Keys and Salts.
