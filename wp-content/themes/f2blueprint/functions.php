@@ -1,5 +1,6 @@
 <?php 
-// Page and post banner auto selection 
+
+// Sub Page and post banner auto selection 
     function pageBanner($args = NULL) {
         if (!$args['title']) {
             $args['title'] = get_the_title(); 
@@ -29,7 +30,111 @@
 
     <?php 
     }
-    
+
+// Show post list by type 
+    function showPostEventListByTypeQuery($args = NULL) {
+         $today = date('Ymd');
+
+        if(!$args['posttype']){
+            $args['posttype'] = 'blog';
+        }
+
+        if(!$args['perpage']){
+            $args['perpage'] = 10;
+        }
+
+            $postListQuery = new WP_Query(array(
+                'posts_per_page' => $args['perpage'],
+                'post_type' => $args['posttype'],
+                'meta_key' => 'event_date',
+                'orderby' => 'meta_value_num',
+                'order' => 'ASC',
+                'meta_query' => array(
+                    array(
+                        'key' => 'event_date',
+                        'compare' => '>=',
+                        'value' => $today,
+                        'type' => 'numeric'
+                    )
+                )
+            ));
+
+            while($postListQuery->have_posts()){
+                $postListQuery->the_post(); 
+                get_template_part('partials/content', $args['posttype']);     
+            }
+
+            ?>
+
+             <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link($args['posttype']); ?>" class="btn btn--blue">View all <?php echo $args['posttype'] ?>(s)</a></p>
+
+    <?php
+        wp_reset_postdata();
+    }
+    ?>
+
+<?php
+    // Show events list 
+    function showPostListByTypeQuery($args = NULL) {
+         $today = date('Ymd');
+
+         if (!$args['title']) {
+            $args['title'] = get_the_title(); 
+        }
+        if (!$args['subtitle']) {
+            $args['subtitle'] = get_field('page_banner_sub_title');
+        }
+
+        if (!$args['photo']) {
+            if (get_field('page_banner_background_image')) {
+                 $args['photo'] = get_field('page_banner_background_image')['sizes']['pageBanner']; 
+            } else {
+                 $args['photo'] = get_theme_file_uri('/images/sa-bg.jpg');
+            }
+           
+        }
+
+        if(!$args['posttype']){
+            $args['posttype'] = 'blog';
+        }
+
+        if(!$args['perpage']){
+            $args['perpage'] = 10;
+        }
+
+            $postListQuery = new WP_Query(array(
+                'posts_per_page' => $args['perpage'],
+                'post_type' => $args['posttype'],
+                // 'meta_key' => 'event_date',
+                // 'orderby' => 'meta_value_num',
+                'order' => 'ASC',
+                // 'meta_query' => array(
+                //     array(
+                //         'key' => 'event_date',
+                //         'compare' => '>=',
+                //         'value' => $today,
+                //         'type' => 'numeric'
+                //     )
+                // )
+            ));
+
+            while($postListQuery->have_posts()){
+                $postListQuery->the_post(); 
+                get_template_part('partials/content', $args['posttype']);     
+            }
+
+            ?>
+
+             <!-- <p class="t-center no-margin"><a href="<?php echo get_post_type_archive_link($args['posttype']); ?>" class="btn btn--blue">View all <?php echo $args['posttype'] ?>(s)</a></p> -->
+
+    <?php
+        wp_reset_postdata();
+    }
+    ?>
+
+
+
+    <?php 
     function f2_blueprint_files() {
         // wp_enqueue_script('primary-main-js', get_theme_file_uri('/js/scripts-bundled.js'), NULL,'1.0', true );
         wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
